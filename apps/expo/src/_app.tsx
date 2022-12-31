@@ -9,7 +9,7 @@ import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { tokenCache } from "./utils/cache";
 
 // Find this in your Dashboard.
-const clerk_frontend_api = "YOUR_CLERK_FRONTEND_API";
+const clerk_frontend_api = "clerk.premium.mantis-88.lcl.dev";
 
 export const App = () => {
   return (
