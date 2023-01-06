@@ -25,14 +25,14 @@ const SignInWithOAuth = () => {
       } = signIn;
 
       const result = await AuthSession.startAsync({
-        authUrl: externalVerificationRedirectURL.toString(),
+        authUrl: externalVerificationRedirectURL?.toString() || "",
         returnUrl: redirectUrl,
       });
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const { type, params } = result || {};
-      console.log;
+
       if (type !== "success") {
         throw "Something went wrong during the OAuth flow. Try again.";
       }
