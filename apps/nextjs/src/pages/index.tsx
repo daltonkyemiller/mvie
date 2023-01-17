@@ -1,26 +1,11 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { trpc } from '../utils/trpc';
-import type { inferProcedureOutput } from '@trpc/server';
-import type { AppRouter } from '@acme/api';
-import { useAuth, UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
-import Link from 'next/link';
 import clsx from 'clsx';
-import { FC, useEffect, useMemo, useState } from 'react';
-import { motion, MotionConfig, TargetAndTransition, useAnimationControls, useScroll, Variants } from 'framer-motion';
+import { useEffect, useMemo } from 'react';
+import { motion, MotionConfig, TargetAndTransition, useAnimationControls } from 'framer-motion';
 import { random } from 'lodash';
-
-const PostCard: FC<{
-  post: inferProcedureOutput<AppRouter['post']['all']>[number];
-}> = ({ post }) => {
-  return (
-    <div className="max-w-2xl rounded-lg border-2 border-gray-500 p-4 transition-all hover:scale-[101%]">
-      <h2 className="text-2xl font-bold text-[hsl(280,100%,70%)]">{post.title}</h2>
-      <p>{post.content}</p>
-    </div>
-  );
-};
+import { Page } from '@components';
 
 const Home: NextPage = () => {
   const imgProps = useMemo(() => ({ fill: true, className: 'h-full w-full object-cover' }), []);
@@ -83,9 +68,8 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Mvie</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className="flex h-full w-full flex-col items-center justify-center gap-10 p-10">
+      <Page>
         <motion.header className="self-start" animate={headerControls} initial={{ opacity: 0 }}>
           <h1 className="font-brand font-display text-9xl">mvie</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, quaerat.</p>
@@ -144,49 +128,9 @@ const Home: NextPage = () => {
             </motion.div>
           </motion.div>
         </MotionConfig>
-      </section>
+      </Page>
     </>
   );
 };
 
 export default Home;
-
-const AuthShowcase: FC = () => {
-  const { isSignedIn } = useAuth();
-  const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(undefined, { enabled: !!isSignedIn });
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      {isSignedIn && (
-        <>
-          <p className="text-center text-2xl text-white">
-            {secretMessage && (
-              <span>
-                {' '}
-                {secretMessage} click the user button!
-                <br />
-              </span>
-            )}
-          </p>
-          <div className="flex items-center justify-center">
-            <UserButton
-              appearance={{
-                elements: {
-                  userButtonAvatarBox: {
-                    width: '3rem',
-                    height: '3rem',
-                  },
-                },
-              }}
-            />
-          </div>
-        </>
-      )}
-      {!isSignedIn && (
-        <p className="text-center text-2xl text-white">
-          <Link href="/sign-in">Sign In</Link>
-        </p>
-      )}
-    </div>
-  );
-};

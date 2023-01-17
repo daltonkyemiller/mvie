@@ -1,14 +1,16 @@
 // @ts-check
-import { z } from 'zod';
+import {z} from 'zod';
 
 /**
  * Specify your server-side environment variables schema here.
  * This way you can ensure the app isn't built with invalid env vars.
  */
 export const serverSchema = z.object({
-  NODE_ENV: z.enum(['development', 'test', 'production']),
-  CLERK_API_KEY: z.string(),
-  CLERK_JWT_KEY: z.string(),
+    NODE_ENV: z.enum(['development', 'test', 'production']),
+    CLERK_API_KEY: z.string(),
+    CLERK_JWT_KEY: z.string(),
+    TMDB_URL: z.string(),
+    TMDB_API_KEY: z.string(),
 });
 
 /**
@@ -17,7 +19,8 @@ export const serverSchema = z.object({
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 export const clientSchema = z.object({
-  NEXT_PUBLIC_CLERK_FRONTEND_API: z.string(),
+    NEXT_PUBLIC_CLERK_FRONTEND_API: z.string(),
+    NEXT_PUBLIC_TMDB_IMAGE_URL: z.string(),
 });
 
 /**
@@ -27,5 +30,6 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-  NEXT_PUBLIC_CLERK_FRONTEND_API: process.env.NEXT_PUBLIC_CLERK_FRONTEND_API,
+    NEXT_PUBLIC_CLERK_FRONTEND_API: process.env.NEXT_PUBLIC_CLERK_FRONTEND_API,
+    NEXT_PUBLIC_TMDB_IMAGE_URL: process.env.NEXT_PUBLIC_TMDB_IMAGE_URL,
 };

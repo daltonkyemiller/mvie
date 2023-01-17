@@ -35,6 +35,8 @@
     "DATABASE_URL",
     "NEXT_PUBLIC_CLERK_FRONTEND_API",
     "CLERK_API_KEY",
-    "CLERK_JWT_KEY"
+    "CLERK_JWT_KEY",
+    "TMDB_API_URL",
+    "TMDB_API_KEY"
   ]
 }

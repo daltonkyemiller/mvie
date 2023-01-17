@@ -7,6 +7,7 @@ module.exports = {
         dark: '#2B2B2B',
       },
       fontFamily: {
+        sans: 'Euclid Circular, sans-serif',
         display: 'ivypresto-display',
       },
     },

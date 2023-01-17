@@ -1,14 +1,17 @@
 import { SignUp } from '@clerk/nextjs';
+import { Page } from '@components';
 
 const SignUpPage = () => (
-  <main className="flex h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-    <div className="flex flex-col items-center justify-center gap-4">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-8">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">Sign In</h1>
+  <Page>
+    <div className="flex flex-col items-center justify-center gap-6">
+      <header>
+        <h1 className="font-display text-5xl font-extrabold tracking-tight">Sign up</h1>
+      </header>
+      <section>
         <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
-      </div>
+      </section>
     </div>
-  </main>
+  </Page>
 );
 
 export default SignUpPage;
