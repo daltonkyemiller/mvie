@@ -3,12 +3,10 @@ import '../styles/globals.css';
 import type { AppType } from 'next/app';
 import { ClerkProvider } from '@clerk/nextjs';
 import { trpc } from '../utils/trpc';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { Layout } from '@components';
 
-const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps }, router }) => {
   return (
     <>
       <Head>
@@ -16,7 +14,7 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ClerkProvider {...pageProps}>
-        <Layout>
+        <Layout router={router}>
           <Component {...pageProps} />
         </Layout>
       </ClerkProvider>

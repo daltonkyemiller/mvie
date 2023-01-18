@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import { PropsWithChildren, useCallback } from 'react';
 import { useAuth, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
@@ -8,7 +7,8 @@ import clsx from 'clsx';
 export const Nav = ({ path }: { path: string | null }) => {
   const { isSignedIn } = useAuth();
   const pathStyles = useCallback(
-    (p: string) => clsx('transition-all opacity-50 hover:opacity-100', { 'opacity-100': p === path }),
+    (p: string, other?: string) =>
+      clsx('relative transition-all opacity-50 hover:opacity-100', other, { 'opacity-100': p === path }),
     [path],
   );
   return (
@@ -32,11 +32,17 @@ export const Nav = ({ path }: { path: string | null }) => {
           </li>
         ) : (
           <>
-            <li className={pathStyles('/sign-in')}>
+            <li className={pathStyles('/sign-in', 'relative')}>
               <Link href="/sign-in">Sign in</Link>
+              {path === '/sign-in' && (
+                <motion.div layoutId="nav-underline" className="bg-dark absolute bottom-0 h-0.5 w-full" />
+              )}
             </li>
             <li className={pathStyles('/sign-up')}>
               <Link href="/sign-up">Sign up</Link>
+              {path === '/sign-up' && (
+                <motion.div layoutId="nav-underline" className="bg-dark absolute bottom-0 h-0.5 w-full" />
+              )}
             </li>
           </>
         )}
@@ -45,14 +51,15 @@ export const Nav = ({ path }: { path: string | null }) => {
   );
 };
 
-export default function Layout({ children }: PropsWithChildren) {
-  const path = usePathname();
+export default function Layout({ children, router }: PropsWithChildren<{ router: any }>) {
   return (
     <>
-      <Nav path={path} />
-      <motion.main key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        {children}
-      </motion.main>
+      <Nav path={router.asPath} />
+      <AnimatePresence mode="wait">
+        <motion.main key={router.asPath} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          {children}
+        </motion.main>
+      </AnimatePresence>
     </>
   );
 }

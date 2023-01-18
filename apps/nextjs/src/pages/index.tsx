@@ -6,6 +6,8 @@ import { useEffect, useMemo } from 'react';
 import { motion, MotionConfig, TargetAndTransition, useAnimationControls } from 'framer-motion';
 import { random } from 'lodash';
 import { Page } from '@components';
+import Link from 'next/link';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Home: NextPage = () => {
   const imgProps = useMemo(() => ({ fill: true, className: 'h-full w-full object-cover' }), []);
@@ -72,7 +74,9 @@ const Home: NextPage = () => {
       <Page>
         <motion.header className="self-start" animate={headerControls} initial={{ opacity: 0 }}>
           <h1 className="font-brand font-display text-9xl">mvie</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, quaerat.</p>
+          <Link href="/home" className="group flex items-center gap-1">
+            Discover Movies <AiOutlineArrowRight className="inline transition-all group-hover:translate-x-2" />
+          </Link>
         </motion.header>
         <MotionConfig transition={{ duration: 2 }}>
           <motion.div className="flex items-center justify-center gap-10" animate={containerControls}>
